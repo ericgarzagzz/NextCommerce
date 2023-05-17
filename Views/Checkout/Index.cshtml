@@ -1,0 +1,170 @@
+﻿@model CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Proceso de pago";
+}
+
+<!-- Breadcrumb section start -->
+<section class="breadcrumb-section section-b-space">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>@ViewData["Title"]</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="@Url.ActionLink("Index", "Home")">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+
+<!-- Cart Section Start -->
+<section class="section-b-space">
+    <div class="container">
+        <div class="row g-4">
+            
+
+            <div class="col-lg-8">
+                <form class="needs-validation" id="payment-form">
+                    <h3 class="mb-3">Datos de envío</h3>
+
+                    <div id="shipping-address-element"></div>
+
+                    @if (User.IsAuthenticated())
+                    {
+                        <div class="form-check ps-0 mt-3 custome-form-check">
+                            <input class="checkbox_animated check-it" type="checkbox" id="save_address_cb">
+                            <label class="form-check-label checkout-label" for="save_address_cb">
+                                Guardar esta
+                                información para la siguiente vez
+                            </label>
+                        </div>
+                    }
+
+                    <hr class="my-lg-5 my-4">
+
+                    <h3 class="mb-3">Datos de pago</h3>
+
+                    <div class="col-md-12 mb-2">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" placeholder="ejemplo@gmail.com" required>
+                    </div>
+
+                    <div id="payment-message" class="alert alert-danger d-none" role="alert"></div>
+                    <div id="payment-element">
+                        <!--Stripe.js injects the Payment Element-->
+                    </div>
+                    <button class="btn btn-solid-default mt-4" id="confirmPaymentBtn" type="submit" disabled>
+                        <i class="fa fa-circle-notch fa-spin d-none" id="spinner"></i>
+                        <span class="ms-2">Confirmar pago</span>
+                    </button>
+
+                    <!--
+                    <div class="d-block my-3">
+                        <div class="form-check custome-radio-box">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="credit">
+                            <label class="form-check-label" for="credit">Credit card</label>
+                        </div>
+
+                        <div class="form-check custome-radio-box">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="debit">
+                            <label class="form-check-label" for="debit">Debit card</label>
+                        </div>
+
+                        <div class="form-check custome-radio-box">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="paypal">
+                            <label class="form-check-label" for="paypal">PayPal</label>
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label for="cc-name" class="form-label">Name on card</label>
+                            <input type="text" class="form-control" id="cc-name">
+                            <div id="emailHelp" class="form-text">Full name as displayed on card</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="cc-number" class="form-label">Credit card number</label>
+                            <input type="text" class="form-control" id="cc-number" required="">
+                            <div class="invalid-feedback">Credit card number is required</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="expiration" class="form-label">Expiration</label>
+                            <input type="text" class="form-control" id="expiration">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="cc-cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cc-cvv">
+                        </div>
+                    </div>
+                    <button class="btn btn-solid-default mt-4" type="submit">
+                        Continue
+                        to checkout
+                    </button>
+                    -->
+                </form>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="your-cart-box">
+                    <h3 class="mb-3 d-flex text-capitalize">
+                        Tu carrito<span class="badge bg-theme new-badge rounded-pill ms-auto bg-dark">@(Model.ShoppingSession.CartItems.Count)</span>
+                    </h3>
+                    <ul class="list-group mb-3">
+                        @foreach (var item in Model.ShoppingSession.CartItems)
+                        {
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">@(item.Quantity)x @item.Product.Name</h6>
+                                    <small>@item.Product.Category?.Name</small>
+                                </div>
+                                <span>@((item.UnitPrice * item.Quantity).ToString("C"))</span>
+                            </li>
+                        }
+
+                        @if (Model.ShoppingSession.Fees > 0)
+                        {
+                            <li class="list-group-item d-flex lh-condensed justify-content-between">
+                                <span class="fw-bold">Tarifas (MXN)</span>
+                                <strong>@Model.ShoppingSession.Fees.ToString("C")</strong>
+                            </li>
+                        }
+
+                        <li class="list-group-item d-flex lh-condensed justify-content-between">
+                            <span class="fw-bold">Total (MXN)</span>
+                            <strong>@Model.ShoppingSession.Total.ToString("C")</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Cart Section End -->
+
+@Html.Hidden("stripe_pk", await settings.GetAsync(SettingType.STRIPE_PUBLISHABLE_KEY))
+@Html.Hidden("pi_client_secret", Model.PaymentIntentClientSecret)
+
+@section Scripts {
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="~/front/js/checkout.js" asp-append-version="true" defer></script>
+}

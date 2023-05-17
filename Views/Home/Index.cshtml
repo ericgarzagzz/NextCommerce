@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+
+    var collections = await productShowcaseCollections.GetAllAsync();
+    var productSliders = await sliders.GetProductSlidersAsync();
+}
+
+@await Html.PartialAsync("_HomeSlider", productSliders)
+
+@await Html.PartialAsync("_ServiceSection")
+
+@await Html.PartialAsync("_ProductSection", collections.Where(c => c.Type == ProductShowcaseType.Simple))
+
+@await Html.PartialAsync("_ProductSection2", collections.Where(c => c.Type == ProductShowcaseType.Compact))
+
+@await Html.PartialAsync("_TabBannerSection", collections.Where(c => c.Type == ProductShowcaseType.Tab))
+
+@await Html.PartialAsync("_InstagramShopSection", collections.Where(c => c.Type == ProductShowcaseType.Cover))
+
+@await Html.PartialAsync("_BrandSection")
+
+@section Scripts {
+    <script src="~/front/js/home-script.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,87 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<!-- Sign Up Section Start -->
+<div class="login-section">
+    <div class="materialContainer">
+        <div class="box">
+            <div class="login-title">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger my-4"></div>
+
+                <div class="input">
+                    <label asp-for="Input.UserName"></label>
+                    <input asp-for="Input.UserName" autocomplete="username" aria-required="true" />
+                    <span class="spin"></span>
+                    <span asp-validation-for="Input.UserName" class="text-danger mt-3"></span>
+                </div>
+
+                <div class="input">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" autocomplete="email" aria-required="true" />
+                    <span class="spin"></span>
+                    <span asp-validation-for="Input.Email" class="text-danger mt-3"></span>
+                </div>
+
+                <div class="input">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" autocomplete="new-password" aria-required="true" />
+                    <span class="spin"></span>
+                    <span asp-validation-for="Input.Password" class="text-danger mt-3"></span>
+                </div>
+
+                <div class="input">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword" autocomplete="new-password" aria-required="true" />
+                    <span class="spin"></span>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger mt-3"></span>
+                </div>
+
+                <div class="button login">
+                    <button type="submit">
+                        <span>Registrarse</span>
+                        <i class="fa fa-check"></i>
+                    </button>
+                </div>
+            </form>
+
+            @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+            {
+                <p class="sign-category">
+                    <span>O regístrate con</span>
+                </p>
+
+                <div class="row gx-md-3 gy-3">
+                    @foreach (var provider in Model.ExternalLogins)
+                    {
+                        <form id="external-account-@(provider.Name)" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal col-md-6">
+                            <div>
+                                <a href="javascript:;" onclick="document.getElementById('external-account-@(provider.Name)').submit()">
+                                    <div class="social-media @(provider.Name.ToLower() == "facebook" ? "fb-media" : (provider.Name.ToLower() == "google" ? "google-media": ""))">
+                                        <img src="~/front/images/inner-page/@(provider.DisplayName.ToLower()).png" class="img-fluid blur-up lazyload"
+                                     alt="">
+                                        <h6>@provider.DisplayName</h6>
+                                    </div>
+                                    <input type="hidden" name="provider" value="@provider.Name" />
+                                </a>
+                            </div>
+                        </form>
+                    }
+                </div>
+            }
+
+            <p>¿Ya tienes una cuenta? <a asp-area="Identity" asp-page="/Account/Login" class="theme-color">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+</div>
+<!-- Sign Up Section End -->
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

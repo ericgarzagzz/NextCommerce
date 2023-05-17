@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ProductShowcaseCollection>
+
+@foreach (var collection in Model)
+{
+    <!-- instagram shop section start -->
+    <section class="ratio_square">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="title title-2 text-center">
+                        @if (!string.IsNullOrEmpty(collection.Caption))
+                        {
+                            <h5>@collection.Caption</h5>
+                        }
+                        <h2>@collection.Title</h2>
+                    </div>
+                    <div class="product-style-1 instagram-2">
+                        <div class="insta-slider product-wrapper instagram-wrap">
+                            @foreach (var item in collection.Items)
+                            {
+                                <div>
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            @if (User.IsAuthenticated())
+                                            {
+                                                <div class="top-wishlist product-color">
+                                                    <a href="javascript:void(0)" class="heart-wishlist heart-color wishlist" data-id="@item.Id">
+                                                        <i class="far fa-heart"></i>
+                                                    </a>
+                                                </div>
+                                            }
+                                            <div class="share share-box share-opacity">
+                                                <span class="share-plus share-plus-color">+</span>
+                                                <span>Compartir</span>
+                                            </div>
+                                            <a href="shop-left-sidebar.html" class="text-center">
+                                                @if (item.Product.Images.Any())
+                                                {
+                                                    <img src="~/front/images/product/@item.Product.Images.First().Image.Path" class="bg-img blur-up lazyload" alt="">
+                                                }
+                                                else
+                                                {
+                                                    <img src="~/front/images/electronics/product/1.jpg" class="bg-img blur-up lazyload" alt="">
+                                                }
+                                            </a>
+                                        </div>
+                                        <div class="insta-hover text-center">
+                                            <div>
+                                                @if (item.Product.Category != null)
+                                                {
+                                                    <h5>@(item.Product.Category.Name)</h5>
+                                                }
+                                                <h3 class="text-hide">@item.Product.Name a solo @(item.Product.SalePrice.ToString("C"))</h3>
+                                                <button onclick="location.href = '@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))';" type="button"
+                                                class="btn btn-light-white">
+                                                    Comprar <i class="fas fa-chevron-right ms-2"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- instagram shop section end -->
+}

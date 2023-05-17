@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Mis pedidos";
+    ViewData["MenuIndex"] = 1;
+}
+
+<div class="box-head mb-3">
+    <h3>Mis pedidos</h3>
+</div>
+<div class="table-responsive">
+    <table class="table cart-table">
+        <thead>
+            <tr class="table-head">
+                <th scope="col">ID</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estatus</th>
+                <th scope="col">Total</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>
+                        <p class="mt-0">@(_hashIds.Encode(order.Id))</p>
+                    </td>
+                    <td>
+                        <p class="mt-0">@order.CreatedAt.ToLocalTime().ToString("d")</p>
+                    </td>
+                    <td>
+                        <p class="success-button btn btn-sm @(order.Details.Status.GetColorClassName())">@order.Details.Status.GetDisplayName()</p>
+                    </td>
+                    <td>
+                        <p class="theme-color fs-6">@order.Total.ToString("C")</p>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)">
+                            <i class="far fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        @if (!Model.Any())
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-center text-muted fw-normal p-4">No hay pedidos</td>
+                </tr>
+            </tfoot>
+        }
+    </table>
+</div>

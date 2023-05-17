@@ -1,0 +1,24 @@
+﻿<!-- service section start -->
+<section class="service-section">
+    <div class="container">
+        <div class="row g-4 g-sm-3">
+            @foreach (var banner in await serviceBanners.GetAllAsync())
+            {
+                <div class="col-xl-3 col-sm-6">
+                    <div class="service-wrap">
+                        <div class="service-icon align-self-baseline">
+                            <svg>
+                                <use xlink:href="/front/svg/icons.svg#@(banner.Icon)"></use>
+                            </svg>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="mb-2">@(banner.Name)</h3>
+                            <span class="font-light">@(banner.Description)</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- service section end -->

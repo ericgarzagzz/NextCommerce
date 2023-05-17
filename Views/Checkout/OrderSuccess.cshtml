@@ -1,0 +1,198 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Orden Creada";
+
+    var voucherUrl = "";
+
+    if (ViewBag.NextAction != null)
+    {
+        var stripeNextAction = (Stripe.PaymentIntentNextAction)ViewBag.NextAction;
+
+        if (stripeNextAction.Type == "oxxo_display_details")
+        {
+            voucherUrl = stripeNextAction.OxxoDisplayDetails.HostedVoucherUrl;
+        }
+    }
+}
+
+<!-- Order Success Section Start -->
+<section class="pt-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 p-0">
+                <div class="success-icon">
+                    <div class="main-container">
+                        <div class="check-container">
+                            <div class="check-background">
+                                <svg viewBox="0 0 65 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7 25L27.3077 44L58.5 7" stroke="white" stroke-width="13"
+                                          stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="check-shadow"></div>
+                        </div>
+                    </div>
+
+                    <div class="success-contain">
+                        <h4>Orden Creada</h4>
+                        <h5 class="font-light">Tu pedido ha sido creado y está siendo precesado.</h5>
+                        <h6 class="font-light">ID de Transacción: @Model.Details.StripePaymentIntentId</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Order Success Section End -->
+<!-- Oder Details Section Start -->
+<section class="section-b-space cart-section order-details-table">
+    <div class="container">
+        <div class="title title1 title-effect mb-1 title-left">
+            <h2 class="mb-3">Detalles del pedido</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="col-sm-12 table-responsive">
+                    <table class="table cart-table table-borderless">
+                        <tbody>
+                            @foreach (var item in Model.LineItems)
+                            {
+                                <tr class="table-order">
+                                    <td>
+                                        <a href="javascript:void(0)">
+                                            @if (item.Product.Images.Any())
+                                            {
+                                                <img src="~/front/images/product/@item.Product.Images.First().Image.Path" class="img-fluid blur-up lazyload" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/front/images/fashion/instagram/1.jpg"
+                                                     class="img-fluid blur-up lazyload" alt="">
+                                            }
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <p>Producto</p>
+                                        <h5>@item.Product.Name</h5>
+                                    </td>
+                                    <td>
+                                        <p>Cantidad</p>
+                                        <h5>@item.Quantity.ToString("#.####")</h5>
+                                    </td>
+                                    <td>
+                                        <p>Precio</p>
+                                        <h5>@(((item.UnitPrice - item.UnitTaxes) * item.Quantity).ToString("C"))</h5>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-order">
+                                <td colspan="3">
+                                    <h5 class="font-light">Productos :</h5>
+                                </td>
+                                <td>
+                                    <h4>@((Model.Total - Model.Fees - Model.LineItems.Sum(i => i.UnitTaxes * i.Quantity)).ToString("C"))</h4>
+                                </td>
+                            </tr>
+
+                            <tr class="table-order">
+                                <td colspan="3">
+                                    <h5 class="font-light">Impuestos :</h5>
+                                </td>
+                                <td>
+                                    <h4>@((Model.LineItems.Sum(i => i.UnitTaxes * i.Quantity)).ToString("C"))</h4>
+                                </td>
+                            </tr>
+
+                            <tr class="table-order">
+                                <td colspan="3">
+                                    <h5 class="font-light">Subtotal :</h5>
+                                </td>
+                                <td>
+                                    <h4>@((Model.LineItems.Sum(i => i.UnitPrice * i.Quantity)).ToString("C"))</h4>
+                                </td>
+                            </tr>
+
+                            @if (Model.Fees > 0)
+                            {
+                                <tr class="table-order">
+                                    <td colspan="3">
+                                        <h5 class="font-light">Tarifas :</h5>
+                                    </td>
+                                    <td>
+                                        <h4>@Model.Fees.ToString("C")</h4>
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr class="table-order">
+                                <td colspan="3">
+                                    <h4 class="theme-color fw-bold">Total :</h4>
+                                </td>
+                                <td>
+                                    <h4 class="theme-color fw-bold">@Model.Total.ToString("C")</h4>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="order-success">
+                    <div class="row g-4">
+                        <div class="col-sm-6">
+                            <h4>Resumen</h4>
+                            <ul class="order-details">
+                                <li>ID del pedido: @(_hashIds.Encode(Model.Id))</li>
+                                <li>Fecha del pedido: @(Model.CreatedAt.ToString())</li>
+                                <li>Total: @Model.Total.ToString("C")</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <h4>Datos del envío</h4>
+                            <ul class="order-details">
+                                <li>@Model.Details.ShippingAddress.FullName</li>
+                                <li>@Model.Details.ShippingAddress.Address, @Model.Details.ShippingAddress.Neighborhood</li>
+                                <li>@Model.Details.ShippingAddress.City, @Model.Details.ShippingAddress.State</li>
+                                <li>@Model.Details.ShippingAddress.PostalCode</li>
+                                <li>@Model.Details.ShippingAddress.Country</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="payment-mode">
+                                <h4>Método de pago</h4>
+                                <p>
+                                    @Model.Details.StripePaymentMethod.ToHumanReadableString()
+                                </p>
+                                @if (!string.IsNullOrEmpty(voucherUrl))
+                                {
+                                    <a href="@voucherUrl">Abrir voucher de pago</a>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="payment-mode">
+                                <h4>Estatus del pedido: @Model.Details.Status.GetDisplayName()</h4>
+                                <p>
+                                    @Model.Details.Status.GetDescription()
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="delivery-sec">
+                                <a href="order-tracking.html">Consultar seguimiento del pedido</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Order Details Section End -->

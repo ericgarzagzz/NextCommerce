@@ -1,0 +1,21 @@
+﻿@using HashidsNet;
+@using Microsoft.AspNetCore.Identity
+@using NextCommerce
+@using NextCommerce.Extensions
+@using NextCommerce.Models
+@using NextCommerce.Models.API
+@using NextCommerce.Data.Entities
+@using NextCommerce.Data.Enums
+@using NextCommerce.Services.Interfaces
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject ISettingsService settings
+@inject ICategoriesService categories
+@inject IServiceBannersService serviceBanners
+@inject IProductShowcaseCollectionService productShowcaseCollections
+@inject IBrandsService brands
+@inject ISlidersService sliders
+@inject IShoppingCartService shoppingCart
+@inject IWishlistService wishlist
+@inject SignInManager<ApplicationUser> signInManager
+@inject Hashids _hashIds

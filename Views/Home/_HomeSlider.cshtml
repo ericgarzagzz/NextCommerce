@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Product>
+
+@if (Model.Any())
+{
+    <!-- home slider start -->
+    <section class="home-section">
+        <div class="container-fluid">
+            <div class="slick-1 classic-arrow">
+                @foreach (var product in Model)
+                {
+                    <div>
+                        <div class="home-slider">
+                            <img src="~/front/images/banner/@product.SliderImage?.Path" class="bg-img blur-up lazyload" alt="">
+                            <div class="home-wrap row">
+                                <div class="col-lg-4 col-md-6 col-sm-9 left-content">
+                                    <div>
+                                        <div class="offer-wrap">
+                                            @if (product.Brand != null)
+                                            {
+                                                @if (!string.IsNullOrEmpty(product.SliderPrimaryColor))
+                                                {
+                                                    <h4 class="mb-2" style="color: @product.SliderPrimaryColor">@product.Brand.Name</h4>
+                                                } else {
+                                                    <h4 class="theme-color mb-2">@product.Brand.Name</h4>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="home-content">
+                                            <h1 data-animation-in="fadeInUp" style='color: @(!string.IsNullOrEmpty(product.SliderSecondaryColor) ? product.SliderSecondaryColor : "unset");'>@product.Name</h1>
+                                            <h3 class="mb-3" data-animation-in="fadeInUp" data-delay-in="0.5">
+                                                @if (!string.IsNullOrEmpty(product.SliderPrimaryColor))
+                                                {
+                                                    <span style="color: @product.SliderPrimaryColor">@product.SalePrice.ToString("C")</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="theme-color">@product.SalePrice.ToString("C")</span>
+                                                }
+                                                @if (product.SalePrice < product.Price)
+                                                {
+                                                    <span class="text-decoration-line-through" style='color: @(!string.IsNullOrEmpty(product.SliderSecondaryColor) ? product.SliderSecondaryColor : "unset");'>@product.Price.ToString("C")</span>
+                                                }
+                                            </h3>
+                                            @if (!string.IsNullOrEmpty(product.Description))
+                                            {
+                                                <p class="mb-0 d-sm-block d-none" data-animation-in="fadeInUp" data-delay-in="0.6" style='color: @(!string.IsNullOrEmpty(product.SliderSecondaryColor) ? product.SliderSecondaryColor : "unset");'>
+                                                    @product.Description
+                                                </p>
+                                            }
+                                            <div class="discover-block d-sm-block d-none" data-animation-in="fadeInUp"
+                                         data-delay-in="0.7">
+                                                <div class="d-flex">
+                                                    <a href="@(Url.ActionLink("Detail", "Products", new { productName = product.Name }))" class="play-icon theme-bg-color">
+                                                        <i class="fas fa-play"></i>
+                                                    </a>
+                                                    <div class="discover-content">
+                                                        @if (!string.IsNullOrEmpty(product.SliderPrimaryColor))
+                                                        {
+                                                            <h4 class="mb-1" style="color: @product.SliderPrimaryColor">Ver detalles</h4>
+                                                        } else
+                                                        {
+                                                            <h4 class="theme-color mb-1">Ver detalles</h4>
+                                                        }
+                                                        <h6 style='color: @(!string.IsNullOrEmpty(product.SliderSecondaryColor) ? product.SliderSecondaryColor : "unset");'>del producto</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 offset-lg-5 right-content d-lg-flex d-none">
+                                    <div class="home-social">
+                                        <ul>
+                                            <li>
+                                                <a href="product-left-sidebar.html" class="font-default">
+                                                    <img src="~/front/images/social-icon/1.png"
+                                                 class="img-fluid blur-up lazyload" alt="">
+                                                    <span style='color: @(!string.IsNullOrEmpty(product.SliderSecondaryColor) ? product.SliderSecondaryColor : "unset");'>Facebook</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="product-left-sidebar.html" class="font-default">
+                                                    <img src="~/front/images/social-icon/2.png"
+                                                 class="img-fluid blur-up lazyload" alt="">
+                                                    <span style='color: @(!string.IsNullOrEmpty(product.SliderSecondaryColor) ? product.SliderSecondaryColor : "unset");'>Instagram</span>
+                                                </a>
+                                            </li>
+                                            <li class="mb-0">
+                                                <a href="product-left-sidebar.html" class="font-default">
+                                                    <img src="~/front/images/social-icon/3.png"
+                                                 class="img-fluid blur-up lazyload" alt="">
+                                                    <span style='color: @(!string.IsNullOrEmpty(product.SliderSecondaryColor) ? product.SliderSecondaryColor : "unset");'>Twitter</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <!-- home slider end -->
+}

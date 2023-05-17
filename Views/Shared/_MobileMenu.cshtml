@@ -1,0 +1,48 @@
+﻿<!-- mobile fix menu start -->
+<div class="mobile-menu d-sm-none">
+    <ul>
+        <li>
+            <a asp-controller="Home" asp-action="Index" class="active">
+                <i data-feather="home"></i>
+                <span>Inicio</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" class="toggle-category">
+                <i data-feather="align-justify"></i>
+                <span>Categorías</span>
+            </a>
+        </li>
+        <li>
+            <a href="@Url.ActionLink("Index", "Cart")">
+                <i data-feather="shopping-bag"></i>
+                <span>Ver carrito</span>
+            </a>
+        </li>
+        @if (User.IsAuthenticated())
+        {
+            <li>
+                <a href="wishlist.html">
+                    <i data-feather="heart"></i>
+                    <span>Deseos</span>
+                </a>
+            </li>
+            <li>
+                <a href="user-dashboard.html">
+                    <i data-feather="user"></i>
+                    <span>Mi cuenta</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a asp-area="Identity" asp-page="/Account/Login">
+                    <i data-feather="user"></i>
+                    <span>Iniciar sesión</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+<!-- mobile fix menu end -->

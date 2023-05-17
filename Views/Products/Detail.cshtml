@@ -1,0 +1,51 @@
+﻿@using NextCommerce.Extensions
+
+@model NextCommerce.Data.Entities.Product
+
+@{
+    ViewData["Title"] = string.Join(" - ", new[] { Model.Name, Model.Category?.Name });
+}
+
+@section SEO {
+    <!-- Open Graph -->
+    <meta property="og:title" content="@Model.Name">
+    <meta property="og:type" content="product">
+    <meta property="og:description" content="@Model.Description">
+    <meta property="og:url" content="@Url.ActionLink("Detail", "Products", new { productName = Model.Name })">
+    @for (var i = 0; i < Model.Images.Count; i++)
+    {
+        if (i == 0) {
+            <meta property="og:image" content="@Url.AbsoluteContent("~/front/images/product/" + Model.Images.ElementAt(i).Image.Path, Context)">
+        }
+        <meta property="og:image[@i]" content="@Url.AbsoluteContent("~/front/images/product/" + Model.Images.ElementAt(i).Image.Path, Context)">
+    }
+    <meta property="og:price:amount" content="@Model.Price.ToString("0.00")">
+    <meta property="og:price:currency" content="MXN">
+    <meta property="og:sale_price:amount" content="@Model.SalePrice.ToString("0.00")">
+    <meta property="og:sale_price:currency" content="MXN">
+    <meta property="product:brand" content="@Model.Brand?.Name">
+    <meta property="product:category" content="@Model.Category?.Name">
+
+    <!-- Schema.org -->
+    <div itemscope itemtype="http://schema.org/Product">
+        <meta itemprop="name" content="@Model.Name">
+        <meta itemprop="description" content="@Model.Description">
+        <meta itemprop="url" content="@Url.ActionLink("Detail", "Products", new { productName = Model.Name })">
+        <meta itemprop="image" content="@Model.Images.FirstOrDefault()?.Image.Name">
+        <meta itemprop="brand" content="@Model.Brand?.Name">
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <meta itemprop="price" content="@Model.SalePrice.ToString("0.00")">
+            <meta itemprop="priceCurrency" content="MXN">
+        </div>
+    </div>
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="@Url.AbsoluteContent("~/", Context)">
+    <meta property="twitter:url" content="@Url.ActionLink("Detail", "Products", new { productName = Model.Name })">
+    <meta name="twitter:title" content="@Model.Name">
+    <meta name="twitter:description" content="@Model.Description">
+    <meta name="twitter:image" content="@Model.Images.FirstOrDefault()?.Image.Name">
+}
+
+@await Html.PartialAsync("_ShopSection", Model)

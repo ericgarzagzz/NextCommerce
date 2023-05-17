@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ProductShowcaseCollection>
+
+@foreach (var collection in Model)
+{
+    <!-- product section 2 start -->
+    <section class="ratio_asos">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="title text-center">
+                        @if (!string.IsNullOrEmpty(collection.Caption))
+                        {
+                            <h5>@collection.Caption</h5>
+                        }
+                        <h2>@collection.Title</h2>
+                    </div>
+                    <div class="product-wrapper slide-7 product-style-1">
+                        @foreach (var item in collection.Items)
+                        {
+                            <div>
+                                <div class="product-box">
+                                    <div class="img-wrapper">
+                                        @if (User.IsAuthenticated())
+                                        {
+                                            <div class="top-wishlist">
+                                                <!--<span class="font-dark-30">-20%</span>-->
+                                                <a href="javascript:void(0)" class="heart-wishlist wishlist" data-id="@item.Product.Id">
+                                                    <i class="far fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        }
+                                        <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" class="text-center">
+                                            @if (item.Product.Images.Any())
+                                            {
+                                                <img src="~/front/images/product/@item.Product.Images.First().Image.Path" class="bg-img blur-up lazyload" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/front/images/electronics/product/1.jpg" class="bg-img blur-up lazyload" alt="">
+                                            }
+                                        </a>
+                                    </div>
+                                    <div class="product-details text-center">
+                                        <h3 class="theme-color">
+                                            @(item.Product.SalePrice.ToString("C"))
+                                            @if (item.Product.SalePrice < item.Product.Price)
+                                            {
+                                                <span class="font-light ml-1">@(item.Product.Price.ToString("C"))</span>
+                                            }
+                                        </h3>
+                                        <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" class="font-default">
+                                            <h5>@item.Product.Name</h5>
+                                        </a>
+                                        <ul class="rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <li>
+                                                    @if (item.Product.Rating >= i)
+                                                    {
+                                                        <i class="fas fa-star theme-color"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-star"></i>
+                                                    }
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product section 2 end -->
+}

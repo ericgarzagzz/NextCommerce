@@ -1,0 +1,105 @@
+﻿@model IEnumerable<ProductShowcaseCollection>
+
+@foreach (var collection in Model)
+{
+
+    <!-- product section start -->
+    <section class="ratio_asos">
+        <div class="container-fluid p-0">
+            <div class="row m-0">
+                <div class="col-sm-12 p-0">
+                    <div class="title text-center">
+                        @if (!string.IsNullOrEmpty(collection.Caption))
+                        {
+                            <h5>@collection.Caption</h5>
+                        }
+                        <h2>@collection.Title</h2>
+                    </div>
+                    <div class="product-wrapper slide-6">
+                        @foreach (var item in collection.Items)
+                        {
+                            <div>
+                                <div class="product-box">
+                                    <div class="img-wrapper">
+                                        <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))">
+                                            @if (item.Product.Images.Any())
+                                            {
+                                                <img src="~/front/images/product/@item.Product.Images.First().Image.Path" class="bg-img blur-up lazyload" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/front/images/electronics/product/1.jpg" class="bg-img blur-up lazyload" alt="">
+                                            }
+                                        </a>
+                                        <div class="label-block">
+                                            <!--
+                                            <span class="label label-black">New</span>
+                                            <span class="label label-theme">50% Off</span>
+                                            -->
+                                        </div>
+                                        <div class="cart-wrap">
+                                            <ul>
+                                                <li>
+                                                    <a href="javascript:void(0)" class="addtocart-btn" data-product-id="@item.Product.Id">
+                                                        <i data-feather="shopping-bag"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                               data-bs-target="#quick-view" data-url="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" data-title="@item.Product.Name" data-description="@(item.Product.Description ?? "N/D")" data-model="@item.Product.ModelNumber" data-sku="@item.Product.SKU" data-rating="@item.Product.Rating" data-sale-price-label="@item.Product.SalePrice.ToString("C")" data-price-label="@item.Product.Price.ToString("C")" data-show-old-price='@(item.Product.SalePrice < item.Product.Price ? "true" : "false")' data-images='@(string.Join(",", item.Product.Images.OrderBy(i => i.Order).Select(i => i.Image.Path)))'>
+                                                        <i data-feather="eye"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="compare.html">
+                                                        <i data-feather="refresh-cw"></i>
+                                                    </a>
+                                                </li>
+                                                @if (User.IsAuthenticated())
+                                                {
+                                                    <li>
+                                                        <a href="javascript:void(0)" class="wishlist" data-id="@item.Product.Id">
+                                                            <i data-feather="heart"></i>
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-details text-center">
+                                        <h3 class="theme-color">
+                                            @(item.Product.SalePrice.ToString("C"))
+                                            @if (item.Product.SalePrice < item.Product.Price)
+                                            {
+                                                <span class="font-light ml-1">@(item.Product.Price.ToString("C"))</span>
+                                            }
+                                        </h3>
+                                        <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" class="font-default">
+                                            <h5>@item.Product.Name</h5>
+                                        </a>
+                                        <ul class="rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <li>
+                                                    @if (item.Product.Rating >= i)
+                                                    {
+                                                        <i class="fas fa-star theme-color"></i>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fas fa-star"></i>
+                                                    }
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- product section end -->
+}

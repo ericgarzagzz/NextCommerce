@@ -1,0 +1,181 @@
+﻿@model NextCommerce.Data.Entities.Product
+
+<!-- Shop Section start -->
+<section>
+    <div class="container">
+        <div class="row gx-4 gy-5">
+            <div class="col-lg-12 col-12">
+                <div class="details-items">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="row g-4 ratio_asos">
+                                @if (!Model.Images.Any())
+                                {
+                                    <div class="col-12">
+                                        <img src="~/front/images/electronics/product/1.jpg" class="img-fluid w-100" alt="">
+                                    </div>
+                                }
+
+                                @foreach (var image in Model.Images)
+                                {
+                                    <div class="col-12">
+                                        <img src="~/front/images/product/@image.Image.Path" class="img-fluid w-100" alt="">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="cloth-details-size">
+                                <div class="details-image-concept">
+                                    <h2>@Model.Name</h2>
+                                </div>
+
+                                <div class="label-section">
+                                    @if (Model.Category != null)
+                                    {
+                                        <span class="badge badge-grey-color">@Model.Category.Name</span>
+                                    }
+                                    @if (!Model.OnSale)
+                                    {
+                                        <span class="badge badge-red-color">No disponible</span>
+                                    }
+                                </div>
+
+                                <h3 class="price-detail">
+                                    @Model.SalePrice.ToString("C")
+                                    @if (Model.SalePrice < Model.Price)
+                                    {
+                                        <del>@(Model.Price.ToString("C"))</del>
+                                    }
+                                </h3>
+
+                                <div id="selectSize" class="addeffect-section product-description border-product">
+                                    <h6 class="product-title product-title-2 d-block">cantidad</h6>
+
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <span class="input-group-prepend">
+                                                <button type="button" class="btn quantity-left-minus"
+                                                        data-type="minus" data-field="">
+                                                    <i class="fas fa-minus"></i>
+                                                </button>
+                                            </span>
+                                            <input type="text" name="quantity" class="form-control input-number"
+                                                   value="1">
+                                            <span class="input-group-prepend">
+                                                <button type="button" class="btn quantity-right-plus"
+                                                        data-type="plus" data-field="">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-buttons">
+                                    @if (User.IsAuthenticated())
+                                    {
+                                        <a href="javascript:void(0)" class="btn btn-solid wishlist" data-id="@Model.Id">
+                                            <i class="fa fa-bookmark fz-16 me-2"></i>
+                                            <span>Agregar a lista de deseos</span>
+                                        </a>
+                                    }
+                                    @if (Model.OnSale)
+                                    {
+                                        <a href="javascript:void(0)" id="cartEffect" data-product-id="@Model.Id" data-qty-input-selector="input[name=quantity]" class="btn btn-solid hover-solid btn-animation">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <span>Agregar al carrito</span>
+                                        </a>
+                                    }
+                                </div>
+
+                                <div class="border-product">
+                                    <h6 class="product-title d-block">compártelo</h6>
+                                    <div class="product-icon">
+                                        <ul class="product-social">
+                                            <li>
+                                                <a href="https://www.facebook.com/">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.google.com/">
+                                                    <i class="fab fa-google-plus-g"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/">
+                                                    <i class="fab fa-twitter"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://www.instagram.com/">
+                                                    <i class="fab fa-instagram"></i>
+                                                </a>
+                                            </li>
+                                            <li class="pe-0">
+                                                <a href="https://www.google.com/">
+                                                    <i class="fas fa-rss"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="cloth-review">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#desc" type="button">
+                                Descripción
+                            </button>
+
+                            <button class="nav-link" id="nav-speci-tab" data-bs-toggle="tab" data-bs-target="#speci"
+                                    type="button">
+                                Especificaciones
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="desc">
+                            <div class="shipping-chart">
+                                <div class="part">
+                                    @Model.Description
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="speci">
+                            <div class="pro mb-4">
+                                <div class="table-responsive">
+                                    <table class="table table-part">
+                                        <tr>
+                                            <th>Dimensiones (Largo x Ancho x Alto)</th>
+                                            <td>@(Model.Dimension.DepthInCentimeters?.ToString("0.00") ?? "0.00") x @(Model.Dimension.WidthInCentimeters?.ToString("0.00") ?? "0.00") x @(Model.Dimension.HeightInCentimeters?.ToString("0.00") ?? "0.00") cm; @(Model.Dimension.WeightInKilograms?.ToString("0.00") ?? "0.00") kg</td>
+                                        </tr>
+                                        @foreach (var specification in Model.Specifications)
+                                        {
+                                            <tr>
+                                                <th>@specification.Name</th>
+                                                <td>@specification.Value</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shop Section end -->

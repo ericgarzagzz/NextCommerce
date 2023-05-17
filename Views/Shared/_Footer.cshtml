@@ -1,0 +1,160 @@
+﻿<!-- footer start -->
+<footer class="footer-sm-space">
+    <div class="main-footer">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="footer-contact">
+                        <div class="brand-logo">
+                            <a href="index.html" class="footer-logo">
+                                <svg class="svg-icon">
+                                    <use class="fill-color" xlink:href="/front/svg/icons.svg#logo"></use>
+                                </svg>
+                                <img src="~/front/images/logo.png" class="img-fluid blur-up lazyload" alt="logo">
+                            </a>
+                        </div>
+                        <ul class="contact-lists">
+                            <li>
+                                <span><b>Teléfono:</b> <span class="font-light"> @(await settings.GetAsync(SettingType.CONTACT_PHONE))</span></span>
+
+                            </li>
+                            <li>
+                                <span>
+                                    <b>Ubicación:</b><span class="font-light">
+                                        @(await settings.GetAsync(SettingType.CONTACT_ADDRESS))
+                                    </span>
+                                </span>
+                            </li>
+                            <li>
+                                <span><b>Correo electrónico:</b><span class="font-light"> @(await settings.GetAsync(SettingType.CONTACT_EMAIL))</span></span>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="footer-links">
+                        <div class="footer-title">
+                            <h3>Nosotros</h3>
+                        </div>
+                        <div class="footer-content">
+                            <ul>
+                                <li>
+                                    <a asp-controller="Home" asp-action="Index" class="font-dark">Inicio</a>
+                                </li>
+                                <li>
+                                    <a href="shop-left-sidebar.html" class="font-dark">Tienda</a>
+                                </li>
+                                <li>
+                                    <a href="about-us.html" class="font-dark">Acerca de</a>
+                                </li>
+                                <li>
+                                    <a href="shop-left-sidebar.html" class="font-dark">Contáctanos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="footer-links">
+                        <div class="footer-title">
+                            <h3>Categorías recientes</h3>
+                        </div>
+                        <div class="footer-content">
+                            <ul>
+                                @{
+                                    var newCategories = await categories.GetNewCategories();
+                                }
+                                @if (!newCategories.Any())
+                                {
+                                    <p class="text-muted">No hay categorías nuevas</p>
+                                }
+                                @foreach (var category in newCategories)
+                                {
+                                    <li>
+                                        <a href="shop-left-sidebar.html" class="font-dark">@category.Name</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                    <div class="footer-links">
+                        <div class="footer-title">
+                            <h3>Ayuda</h3>
+                        </div>
+                        <div class="footer-content">
+                            <ul>
+                                @if (User.IsAuthenticated())
+                                {
+                                    <li>
+                                        <a href="user-dashboard.html" class="font-dark">Mis pedidos</a>
+                                    </li>
+                                    <li>
+                                        <a href="user-dashboard.html" class="font-dark">Mi Cuenta</a>
+                                    </li>
+                                    <li>
+                                        <a href="wishlist.html" class="font-dark">Mi lista de deseos</a>
+                                    </li>
+                                }
+                                <li>
+                                    <a href="faq.html" class="font-dark">Preguntas frecuentes</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-sm-6 d-none d-sm-block">
+                    <div class="footer-newsletter">
+                        <h3>Entérate de todas nuestras ofertas</h3>
+                        <div class="form-newsletter">
+                            <div class="input-group mb-4">
+                                <input type="text" class="form-control" placeholder="Tu correo electrónico">
+                                <span class="input-group-text" id="basic-addon4">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </div>
+                            <p class="font-dark mb-0">
+                                Manténte informado de nuestras últimas noticias y ofertas especiales.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sub-footer">
+        <div class="container">
+            <div class="row gy-3">
+                <div class="col-md-6">
+                    <ul>
+                        <li class="font-dark">Aceptamos:</li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img src="~/front/images/payment-icon/1.jpg" class="img-fluid blur-up lazyload"
+                                     alt="payment icon">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img src="~/front/images/payment-icon/2.jpg" class="img-fluid blur-up lazyload"
+                                     alt="payment icon">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <img src="~/front/images/payment-icon/3.jpg" class="img-fluid blur-up lazyload"
+                                     alt="payment icon">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-0 font-dark">© @(DateTime.Now.Year), @(await settings.GetAsync(SettingType.SHOP_STORE)). Desarrollado por Eric</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer end -->

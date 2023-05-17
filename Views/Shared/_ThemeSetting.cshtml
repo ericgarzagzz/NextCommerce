@@ -1,0 +1,16 @@
+﻿<!-- theme Setting Start -->
+<div class="theme-setting">
+    <ul>
+        <li>
+            <button id="darkButton" class="btn btn-sm dark-buttton"><i class="fa fa-moon"></i></button>
+        </li>
+        <li class="d-none">
+            <button class="btn btn-sm rtl-button">RTL</button>
+        </li>
+        <li class="color-picker d-none">
+            <input type="color" class="form-control form-control-color" id="ColorPicker1" value="@(await settings.GetAsync(SettingType.THEME_PRIMARY_COLOR))"
+                   title="Choose your color">
+        </li>
+    </ul>
+</div>
+<!-- theme Setting End -->

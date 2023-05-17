@@ -1,0 +1,212 @@
+﻿@model IEnumerable<ProductShowcaseCollection>
+
+@foreach (var collection in Model)
+{
+    <!-- tab banner section start -->
+    <section class="tab-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="title text-center">
+                        @if (!string.IsNullOrEmpty(collection.Caption))
+                        {
+                            <h5>@collection.Caption</h5>
+                        }
+                        <h2>@collection.Title</h2>
+                    </div>
+                    <div class="tab-wrap">
+                        @{
+                            var itemsByCategory = collection.Items.GroupBy(i => i.Product.Category);
+                            var activeCategory = itemsByCategory.FirstOrDefault()?.Key;
+                        }
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            @foreach (var categoryGroup in itemsByCategory)
+                            {
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link @((categoryGroup.Key == activeCategory) || (categoryGroup.Key == null && activeCategory == null) ? "active" : "")" id="camera-tab" data-bs-toggle="tab" data-bs-target="#@(categoryGroup.Key?.Name ?? "Uncategorized")"
+                                    type="button" role="tab">
+                                        @(categoryGroup.Key?.Name ?? "Sin categoría")
+                                    </button>
+                                </li>
+                            }
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            @foreach (var categoryGroup in itemsByCategory)
+                            {
+                                <div class="tab-pane fade @((categoryGroup.Key == activeCategory) || (categoryGroup.Key == null && activeCategory == null) ? "show active" : "")" id="@(categoryGroup.Key?.Name ?? "Uncategorized")" role="tabpanel">
+                                    <div class="offer-wrap product-style-1">
+                                        <div class="row g-xl-4 g-3">
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="product-list">
+                                                    @for (var i = 0; i < 3; i++)
+                                                    {
+                                                        var item = categoryGroup.ElementAtOrDefault(i);
+
+                                                        @if (item != null)
+                                                        {
+                                                            <div class="product-box">
+                                                                <div class="img-wrapper">
+                                                                    <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" class="text-center">
+                                                                        @if (item.Product.Images.Any())
+                                                                        {
+                                                                            <img src="~/front/images/product/@item.Product.Images.First().Image.Path" class="img-fluid blur-up lazyload" alt="">
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="~/front/images/electronics/product/1.jpg" class="img-fluid blur-up lazyload" alt="">
+                                                                        }
+                                                                    </a>
+                                                                </div>
+                                                                <div class="product-details">
+                                                                    <h3 class="theme-color">
+                                                                        @(item.Product.SalePrice.ToString("C"))
+                                                                        @if (item.Product.SalePrice < item.Product.Price)
+                                                                        {
+                                                                            <span class="font-light ml-1">@(item.Product.Price.ToString("C"))</span>
+                                                                        }
+                                                                    </h3>
+                                                                    <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" class="font-default">
+                                                                        <h5>@item.Product.Name</h5>
+                                                                    </a>
+                                                                    <ul class="rating">
+                                                                        @for (int j = 1; j <= 5; j++)
+                                                                        {
+                                                                            <li>
+                                                                                @if (item.Product.Rating >= j)
+                                                                                {
+                                                                                    <i class="fas fa-star theme-color"></i>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <i class="fas fa-star"></i>
+                                                                                }
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 product-banner">
+                                                @{
+                                                    var bigItem = categoryGroup.ElementAtOrDefault(4);
+
+                                                    @if (bigItem != null)
+                                                    {
+                                                        <div class="product-box">
+                                                            <div class="img-wrapper">
+                                                                <div class="label-block">
+                                                                <!--
+                                                                    <span class="label label-black">New</span>
+                                                                    <span class="label label-theme">50% Off</span>
+                                                                -->
+                                                                </div>
+                                                                <a href="@(Url.ActionLink("Detail", "Products", new { productName = bigItem.Product.Name }))">
+                                                                    @if (bigItem.Product.Images.Any())
+                                                                    {
+                                                                        <img src="~/front/images/product/@bigItem.Product.Images.First().Image.Path" class="img-fluid blur-up lazyload" alt="">
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="~/front/images/electronics/product/1.jpg" class="img-fluid blur-up lazyload" alt="">
+                                                                    }
+                                                                </a>
+                                                            </div>
+                                                            <div class="product-details text-center">
+                                                                <h3 class="theme-color">
+                                                                    @(bigItem.Product.SalePrice.ToString("C"))
+                                                                    @if (bigItem.Product.SalePrice < bigItem.Product.Price)
+                                                                    {
+                                                                        <span class="font-light ml-1">@(bigItem.Product.Price.ToString("C"))</span>
+                                                                    }
+                                                                </h3>
+                                                                <a href="@(Url.ActionLink("Detail", "Products", new { productName = bigItem.Product.Name }))" class="font-default" tabindex="-1">
+                                                                    <h5 class="main-title">@bigItem.Product.Name</h5>
+                                                                </a>
+                                                                <ul class="rating">
+                                                                    @for (int i = 1; i <= 5; i++)
+                                                                    {
+                                                                        <li>
+                                                                            @if (bigItem.Product.Rating >= i)
+                                                                            {
+                                                                                <i class="fas fa-star theme-color"></i>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <i class="fas fa-star"></i>
+                                                                            }
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="product-list">
+                                                    @for (var i = 3; i < 6; i++)
+                                                    {
+                                                        var item = categoryGroup.ElementAtOrDefault(i);
+
+                                                        @if (item != null && item != bigItem)
+                                                        {
+                                                            <div class="product-box">
+                                                                <div class="img-wrapper">
+                                                                    <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" class="text-center">
+                                                                        @if (item.Product.Images.Any())
+                                                                        {
+                                                                            <img src="~/front/images/product/@item.Product.Images.First().Image.Path" class="img-fluid blur-up lazyload" alt="">
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <img src="~/front/images/electronics/product/1.jpg" class="img-fluid blur-up lazyload" alt="">
+                                                                        }
+                                                                    </a>
+                                                                </div>
+                                                                <div class="product-details">
+                                                                    <h3 class="theme-color">
+                                                                        @(item.Product.SalePrice.ToString("C"))
+                                                                        @if (item.Product.SalePrice < item.Product.Price)
+                                                                        {
+                                                                            <span class="font-light ml-1">@(item.Product.Price.ToString("C"))</span>
+                                                                        }
+                                                                    </h3>
+                                                                    <a href="@(Url.ActionLink("Detail", "Products", new { productName = item.Product.Name }))" class="font-default">
+                                                                        <h5>@item.Product.Name</h5>
+                                                                    </a>
+                                                                    <ul class="rating">
+                                                                        @for (int j = 1; j <= 5; j++)
+                                                                        {
+                                                                            <li>
+                                                                                @if (item.Product.Rating >= j)
+                                                                                {
+                                                                                    <i class="fas fa-star theme-color"></i>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <i class="fas fa-star"></i>
+                                                                                }
+                                                                            </li>
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- tab banner section end -->
+}

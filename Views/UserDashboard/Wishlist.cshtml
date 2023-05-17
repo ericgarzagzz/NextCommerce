@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WishItem>
+
+@{
+    ViewData["Title"] = "Mi lista de deseos";
+    ViewData["MenuIndex"] = 2;
+}
+
+<div class="box-head mb-3">
+    <h3>Mi lista de deseos</h3>
+</div>
+<div class="table-responsive">
+    <table class="table cart-table">
+        <thead>
+            <tr class="table-head">
+                <th scope="col">Imagen</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="@Url.ActionLink("Detail", "Products", new { productName = item.Product.Name })">
+                            @if (string.IsNullOrEmpty(item.Product.Images.FirstOrDefault()?.Image.Path))
+                            {
+                                <img src="~/front/images/fashion/product/front/1.jpg"
+                                    class="blur-up lazyload" alt="">
+                            } else
+                            {
+                                <img src="~/front/images/product/@(item.Product.Images.First().Image.Path)"
+                                     class="blur-up lazyload" alt="">
+                            }
+                        </a>
+                    </td>
+                    <td>
+                        <p class="fs-6 m-0">@item.Product.Name</p>
+                    </td>
+                    <td>
+                        <p class="theme-color fs-6">@item.Product.SalePrice.ToString("C")</p>
+                    </td>
+                    <td>
+                        <a href="cart.html" class="btn btn-solid-default btn-sm fw-bold">
+                            Mover al carrito
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        @if (!Model.Any())
+        {
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-center text-muted fw-normal p-4">No hay productos</td>
+                </tr>
+            </tfoot>
+        }
+    </table>
+</div>

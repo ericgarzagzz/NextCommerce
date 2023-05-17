@@ -1,0 +1,21 @@
+﻿<!-- brand section start -->
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="brand-slider">
+                    @foreach (var brand in await brands.GetPromotingBrandsAsync())
+                    {
+                        <div>
+                            <div class="brand-image">
+                                <img src="~/front/images/brand/@(brand.Logo.Path)" class="img-fluid blur-up lazyload"
+                                 alt="Logo de @brand.Name">
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- brand section end -->

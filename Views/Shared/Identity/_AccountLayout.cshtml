@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="manifest" href="~/front/manifest.json">
+    <link rel="icon" href="~/front/images/favicon/4.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/front/images/favicon/4.png">
+    <meta name="theme-color" content="@(await settings.GetAsync(SettingType.THEME_PRIMARY_COLOR))">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Voxo">
+    <meta name="msapplication-TileImage" content="~/front/images/favicon/4.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NextCommerce">
+    <meta name="keywords" content="NextCommerce">
+    <meta name="author" content="Eric Garza">
+    <link rel="icon" href="~/front/images/favicon/1.png" type="image/x-icon" />
+    <title>@ViewData["Title"] - NextCommerce</title>
+
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- bootstrap css -->
+    <link id="rtl-link" rel="stylesheet" type="text/css" href="~/front/css/vendors/bootstrap.css">
+
+    <!-- font-awesome css -->
+    <link rel="stylesheet" type="text/css" href="~/front/css/vendors/font-awesome.css">
+
+    <!-- feather icon css -->
+    <link rel="stylesheet" type="text/css" href="~/front/css/vendors/feather-icon.css">
+
+    <!-- animation css -->
+    <link rel="stylesheet" type="text/css" href="~/front/css/vendors/animate.css">
+
+    <!-- slick css -->
+    <link rel="stylesheet" type="text/css" href="~/front/css/vendors/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/front/css/vendors/slick/slick-theme.css">
+
+    <!-- Theme css -->
+    <link id="color-link" rel="stylesheet" type="text/css" href="~/front/css/demo1.css">
+</head>
+<body class="theme-color1 light ltr">
+    @RenderBody()
+
+    @await Html.PartialAsync("_ThemeSetting")
+
+    <div class="bg-overlay"></div>
+
+    <script>
+        document.body.style.setProperty("--theme-color", "@(await settings.GetAsync(SettingType.THEME_PRIMARY_COLOR))");
+    </script>
+
+    <!-- latest jquery-->
+    <script src="~/front/js/jquery-3.5.1.min.js"></script>
+
+    <!-- Bootstrap js-->
+    <script src="~/front/js/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- feather icon js-->
+    <script src="~/front/js/feather/feather.min.js"></script>
+
+    <!-- lazyload js-->
+    <script src="~/front/js/lazysizes.min.js"></script>
+
+    <!-- Slick js-->
+    <script src="~/front/js/slick/slick.js"></script>
+    <script src="~/front/js/slick/slick-animation.min.js"></script>
+    <script src="~/front/js/slick/custom_slick.js"></script>
+
+    <!-- Timer js -->
+    <script src="~/front/js/timer1.js"></script>
+
+    <!-- newsletter js -->
+    <script src="~/front/js/newsletter.js"></script>
+
+    <!-- Notify js-->
+    <script src="~/front/js/bootstrap/bootstrap-notify.min.js"></script>
+
+    <!-- script js -->
+    <script src="~/front/js/theme-setting.js"></script>
+    <script src="~/front/js/script.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

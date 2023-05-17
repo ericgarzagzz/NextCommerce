@@ -1,0 +1,182 @@
+﻿<!-- Cart Successful Start -->
+<div class="modal fade cart-modal" id="addtocart" tabindex="-1" role="dialog" aria-label="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-contain">
+                    <div>
+                        <div class="modal-messages">
+                            <i class="fas fa-check"></i> Se ha agregado el producto a tu carrito exitosamente.
+                        </div>
+                        <div class="modal-product">
+                            <div class="modal-contain-img">
+                                <img src="~/front/images/fashion/instagram/4.jpg" class="img-fluid blur-up lazyload addtocart__img"
+                                     alt="">
+                            </div>
+                            <div class="modal-contain-details">
+                                <h4 class="addtocart__name">Premier Cropped Skinny Jean</h4>
+                                <p class="font-light my-2">Cantidad: <span class="addtocart__quantity">1</span></p>
+                                <div class="product-total">
+                                    <h5>TOTAL : <span class="addtocart__price">$0.00</span></h5>
+                                </div>
+                                <div class="shop-cart-button mt-3">
+                                    <a href="javascript:void(0)"
+                                       class="btn default-light-theme conti-button default-theme default-theme-2 rounded" data-bs-dismiss="modal">
+                                        CONTINUAR
+                                        COMPRANDO
+                                    </a>
+                                    <a href="@Url.ActionLink("Index", "Cart")"
+                                       class="btn default-light-theme conti-button default-theme default-theme-2 rounded">
+                                        VER
+                                        CARRITO
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ratio_asos mt-4">
+                    <div class="container">
+                        <div class="row m-0">
+                            <div class="col-sm-12 p-0">
+                                <h4 class="mb-lg-4 mb-3 addtocaart__also-bought-title">Clientes también compraron</h4>
+
+                                <div class="product-wrapper product-style-2 p-0 light-arrow bottom-space spacing-slider also-bought-slider">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart Successful End -->
+<!-- Quick view modal start -->
+<div class="modal fade quick-view-modal" id="quick-view">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <div class="row gy-4">
+                    <div class="col-lg-6">
+                        <div class="quick-view-image">
+                            <div class="quick-view-slider ratio_2">
+                                <div>
+                                    <img src="~/front/images/electronics/product/1.jpg" class="img-fluid bg-img"
+                                         alt="product">
+                                </div>
+                                <div>
+                                    <img src="~/front/images/electronics/product/8.jpg" class="img-fluid bg-img"
+                                         alt="product">
+                                </div>
+                                <div>
+                                    <img src="~/front/images/electronics/product/9.jpg" class="img-fluid bg-img"
+                                         alt="product">
+                                </div>
+                                <div>
+                                    <img src="~/front/images/electronics/product/8.jpg" class="img-fluid bg-img"
+                                         alt="product">
+                                </div>
+                            </div>
+                            <div class="quick-nav">
+                                <div>
+                                    <img src="~/front/images/electronics/product/1.jpg"
+                                         class="img-fluid blur-up lazyload" alt="product">
+                                </div>
+                                <div>
+                                    <img src="~/front/images/electronics/product/8.jpg"
+                                         class="img-fluid blur-up lazyload" alt="product">
+                                </div>
+                                <div>
+                                    <img src="~/front/images/electronics/product/9.jpg"
+                                         class="img-fluid blur-up lazyload" alt="product">
+                                </div>
+                                <div>
+                                    <img src="~/front/images/electronics/product/8.jpg"
+                                         class="img-fluid blur-up lazyload" alt="product">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-right">
+                            <h2 class="mb-2" id="quick-view__title">Producto desconocido</h2>
+                            <h6 class="font-light mb-1">Modelo <span id="quick-view__model">LR274</span></h6>
+                            <ul class="rating" id="quick-view__rating">
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star"></i>
+                                </li>
+                            </ul>
+                            <div class="price mt-3">
+                                <h3 id="quick-view__sale-price">$0.00</h3>
+                                <h3 id="quick-view__price" class="text-decoration-line-through font-light">$0.00</h3>
+                            </div>
+                            <div class="product-details">
+                                <h4>Descripción</h4>
+                                <p id="quick-view__description"></p>
+                            </div>
+                            <div class="product-btns">
+                                <a href="cart.html" class="btn btn-solid-default btn-sm" data-bs-dismiss="modal">
+                                    Agregar al carrito
+                                </a>
+                                <a href="#" id="quick-view__url" class="btn btn-solid-default btn-sm">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Quick view modal end -->
+<!-- Newsletter modal start -->
+<div class="modal fade newletter-modal" id="newsletter">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <img src="~/front/images/newletter-icon.png" class="img-fluid blur-up lazyload" alt="">
+                <div class="modal-title">
+                    <h2 class="tt-title">Sign up for our Newsletter!</h2>
+                    <p class="font-light">Never miss any new updates or products we reveal, stay up to date.</p>
+                    <p class="font-light">Oh, and it's free!</p>
+
+                    <div class="input-group mb-3">
+                        <input placeholder="Email" class="form-control" type="text">
+
+                    </div>
+
+                    <div class="cancel-button text-center">
+                        <button class="btn btn-solid-default w-100" data-bs-dismiss="modal"
+                                type="button">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Newsletter modal end -->

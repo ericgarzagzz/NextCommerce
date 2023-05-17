@@ -1,0 +1,209 @@
+﻿@model CartViewModel
+
+@{
+    ViewData["Title"] = "Carrito de compras";
+}
+
+<!-- Breadcrumb section start -->
+<section class="breadcrumb-section section-b-space">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>@ViewData["Title"]</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="@Url.ActionLink("Index", "Home")">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+
+<section class="cart-section section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 table-responsive mt-4">
+                <table class="table cart-table">
+                    <thead>
+                        <tr class="table-head">
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Acciones</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Items.Any())
+                        {
+                            <tr>
+                                <td colspan="6">No hay elementos en el carrito</td>
+                            </tr>
+                        }
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @if (string.IsNullOrEmpty(item.ProductImage))
+                                    {
+                                        <a href="product-left-sidebar.html">
+                                            <img src="~/front/images/fashion/product/front/1.jpg" class=" blur-up lazyload"
+                                                 alt="">
+                                        </a>
+                                    } else
+                                    {
+                                        <a href="product-left-sidebar.html">
+                                            <img src="~/front/images/product/@item.ProductImage" class=" blur-up lazyload"
+                                                 alt="">
+                                        </a>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="product-left-sidebar.html">@item.ProductName</a>
+                                    <div class="mobile-cart-content row">
+                                        <div class="col">
+                                            <div class="qty-box">
+                                                <div class="input-group">
+                                                    <input type="text" name="quantity" class="form-control input-number"
+                                                           value="@item.Quantity">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h2>@item.UnitPriceStr</h2>
+                                        </div>
+                                        <div class="col">
+                                            <h2 class="td-color">
+                                                <a href="javascript:void(0)">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h2>@item.UnitPriceStr</h2>
+                                </td>
+                                <td>
+                                    <div class="qty-box">
+                                        <div class="input-group">
+                                            <input type="number" name="quantity" class="form-control input-number"
+                                                   value="@item.Quantity">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="@Url.ActionLink("Remove", "Cart", new { id = item.Id })" id="remove-item" data-id="@item.Id">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <h2 class="td-color">@item.TotalStr</h2>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-12 mt-md-5 mt-4">
+                <div class="row">
+                    @if (Model.Items.Any())
+                    {
+                        <div class="col-sm-7 col-5 order-1">
+                            <div class="left-side-button text-end d-flex d-block justify-content-end">
+                                <a href="@Url.ActionLink("RemoveAll", "Cart")"
+                                   class="text-decoration-underline theme-color d-block text-capitalize">
+                                    Vaciar carrito
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-sm-5 col-7">
+                        <div class="left-side-button float-start">
+                            <a href="@Url.ActionLink("Index", "Home")" class="btn btn-solid-default btn fw-bold mb-0 ms-0">
+                                <i class="fas fa-arrow-left"></i> Continuar comprando
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Items.Any())
+            {
+
+                <div class="cart-checkout-section">
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="promo-section">
+                                <form class="row g-3">
+                                    <div class="col-7">
+                                        <input type="text" class="form-control" id="number" placeholder="Código del cupón">
+                                    </div>
+                                    <div class="col-5">
+                                        <button class="btn btn-solid-default rounded btn">Aplicar Cupón</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-sm-6 ">
+                            <div class="checkout-button">
+                                <a href="@Url.ActionLink("Index", "Checkout")" class="btn btn-solid-default btn fw-bold">
+                                    Pagar <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="cart-box">
+                                <div class="cart-box-details">
+                                    <div class="total-details">
+                                        <div class="top-details">
+                                            <h3>Desgloce</h3>
+                                            <h6>Productos <span>@((Model.Items.Sum(i => (i.UnitPrice - i.UnitTaxes) * i.Quantity)).ToString("C"))</span></h6>
+                                            <h6>Impuestos <span>@Model.TaxesStr</span></h6>
+                                            <h6>Subtotal <span>@Model.Items.Sum(i => i.UnitPrice * i.Quantity).ToString("C")</span></h6>
+                                            @if (Model.Fees > 0)
+                                            {
+                                                <h6>Tarifas <span>@Model.FeesStr</span></h6>
+                                            }
+                                            <h6>Total <span>@Model.TotalStr</span></h6>
+                                        </div>
+                                        <div class="bottom-details">
+                                            <a href="@Url.ActionLink("Index", "Checkout")">Proceder al pago</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/front/js/cart-script.js" asp-append-version="true"></script>
+}

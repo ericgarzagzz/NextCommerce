@@ -1,0 +1,107 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<!-- Breadcrumb section start -->
+<section class="breadcrumb-section section-b-space">
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Tablero de usuario</h3>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="@Url.ActionLink("Index", "Home")">
+                                <i class="fas fa-home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Tablero de usuario</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb section end -->
+
+<!-- user dashboard section start -->
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <ul class="nav nav-tabs custome-nav-tabs flex-column category-option" id="myTab">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link font-light @(ViewData["MenuIndex"]?.ToString() == "0" ? "active" : "")" href="@Url.ActionLink("Index", "UserDashboard")">
+                            <i class="fas fa-angle-right"></i>Tablero
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link font-light @(ViewData["MenuIndex"]?.ToString() == "1" ? "active" : "")" href="@Url.ActionLink("Orders", "UserDashboard")">
+                            <i class="fas fa-angle-right"></i>Mis pedidos
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link font-light @(ViewData["MenuIndex"]?.ToString() == "2" ? "active" : "")" href="@Url.ActionLink("Wishlist", "UserDashboard")">
+                            <i class="fas fa-angle-right"></i>Mi lista de deseos
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link font-light @(ViewData["MenuIndex"]?.ToString() == "3" ? "active" : "")" href="@Url.ActionLink("SavedAddress", "UserDashboard")">
+                            <i class="fas fa-angle-right"></i>Direcciones guardadas
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link font-light @(ViewData["MenuIndex"]?.ToString() == "4" ? "active" : "")" href="@Url.ActionLink("Payment", "UserDashboard")">
+                            <i class="fas fa-angle-right"></i>Métodos de pago
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link font-light @(ViewData["MenuIndex"]?.ToString() == "5" ? "active" : "")" href="@Url.ActionLink("Profile", "UserDashboard")">
+                            <i class="fas fa-angle-right"></i>Mi perfil
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link font-light @(ViewData["MenuIndex"]?.ToString() == "6" ? "active" : "")" href="@Url.ActionLink("Security", "UserDashboard")">
+                            <i class="fas fa-angle-right"></i>Seguridad
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="filter-button dash-filter dashboard">
+                    <button class="btn btn-solid-default btn-sm fw-bold filter-btn">Mostrar menú</button>
+                </div>
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- user dashboard section end -->
+
+@section Scripts {
+    <script src="~/front/js/filter.js" asp-append-version="true"></script>
+}
